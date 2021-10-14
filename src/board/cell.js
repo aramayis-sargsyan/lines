@@ -7,10 +7,8 @@ export class Cell extends Graphics {
 
   buildCell(count) {
     if (count % 2 === 0) {
-      // this.lineStyle(5, 0x555555);
       this.beginFill(0x888888);
     } else {
-      // this.lineStyle(5, 0xaaaaaa);
       this.beginFill(0xbbbbbb);
     }
 
