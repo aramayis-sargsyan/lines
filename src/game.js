@@ -7,7 +7,7 @@ export class Game extends Application {
     super({
       width: window.innerWidth,
       height: window.innerHeight,
-      backgroundColor: 0xeeeeee,
+      backgroundColor: 0x333333,
     });
 
     document.body.appendChild(this.view);
@@ -20,17 +20,17 @@ export class Game extends Application {
   }
 
   _onLoadComplete() {
-    this._buildBoard()
+    this._buildBoard();
   }
 
   _buildBoard() {
     this._board = new Board();
-    this._board.buildBoard()
+    this._board.buildBoard();
 
-    this._board.position.set(this.screen.width * 0.5, this.screen.height * 0.6)
-    this._board.pivot.set(this._board.width * 0.5, this._board.height * 0.5)
+    this._board.position.set(this.screen.width * 0.5, this.screen.height * 0.6);
+    this._board.pivot.set(this._board.width * 0.5, this._board.height * 0.5);
 
-    this.stage.addChild(this._board)
+    this.stage.addChild(this._board);
   }
 
   _update() {

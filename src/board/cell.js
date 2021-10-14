@@ -5,10 +5,16 @@ export class Cell extends Graphics {
     super();
   }
 
-  buildCell() {
-    this.lineStyle(5, 0x222222);
-    this.beginFill(0x333333);
-    this.drawRect(0, 0, 50, 50);
+  buildCell(count) {
+    if (count % 2 === 0) {
+      // this.lineStyle(5, 0x555555);
+      this.beginFill(0x888888);
+    } else {
+      // this.lineStyle(5, 0xaaaaaa);
+      this.beginFill(0xbbbbbb);
+    }
+
+    this.drawRoundedRect(0, 0, 50, 50, 8);
     this.endFill();
   }
 }
