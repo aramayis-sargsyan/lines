@@ -1,12 +1,13 @@
-import { Application, Graphics } from 'pixi.js';
-import { Board } from './board';
+import { Application } from 'pixi.js';
+import { Board } from './board/board';
+import { Container } from 'pixi.js';
 
 export class Game extends Application {
   constructor() {
     super({
       width: window.innerWidth,
       height: window.innerHeight,
-      backgroundColor: 0x009334,
+      backgroundColor: 0xeeeeee,
     });
 
     document.body.appendChild(this.view);
@@ -19,19 +20,20 @@ export class Game extends Application {
   }
 
   _onLoadComplete() {
-    this._createCell();
-    // console.warn('load complete');
+    this._buildBoard()
   }
 
-  _createCell() {
-    const cellGraphic = new Graphics();
-    cellGraphic.lineStyle(5, 0x222222);
-    cellGraphic.beginFill(0x333333);
-    cellGraphic.drawRect(0, 0, 80, 80);
-    cellGraphic.endFill();
+  _buildBoard() {
+    this._board = new Board();
+    this._board.buildBoard()
+
+    this._board.position.set(this.screen.width * 0.5, this.screen.height * 0.6)
+    this._board.pivot.set(this._board.width * 0.5, this._board.height * 0.5)
+
+    this.stage.addChild(this._board)
   }
 
   _update() {
-    // console.log('update');
+    //
   }
 }
