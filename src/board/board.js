@@ -13,24 +13,39 @@ export class Board extends Container {
   }
 
   buildBoard() {
-    const { cell_count } = BoardConfig;
+    const { cell_count, cell_width, cell_line_style } = BoardConfig;
 
     for (let i = 0; i < cell_count; i++) {
       for (let j = 0; j < cell_count; j++) {
-        this.cells.push({ ball: 0, i, j });
         const cell = new Cell();
-
+        cell.ball = null;
+        cell.i = i;
+        cell.j = j;
         cell.buildCell();
-        cell.position.set(i * 51, j * 51);
-        if ((i + j) % 2 === 0) {
-          cell.tint = 0x888888;
-        } else {
-          cell.tint = 0xbbbbbb;
-        }
+        cell.position.set(i * (cell_width + cell_line_style), j * (cell_width + cell_line_style));
+        cell.tint = (i + j) % 2 === 0 ? 0x888888 : 0xbbbbbb;
+        this.cells.push(cell);
         this.addChild(cell);
       }
     }
   }
 
-  _buildBalls() {}
+  buildBalls(ballCount) {
+    const { cell_width, cell_line_style } = BoardConfig;
+
+    const emtyCells = this.cells.filter((cell) => {
+      return cell.ball === null;
+    });
+    const initial_cell = sampleSize(emtyCells, ballCount);
+    for (let i = 0; i < ballCount; i++) {
+      const ball = new Ball();
+      ball.buildBall();
+      initial_cell[i].ball = ball;
+
+      let color = Math.floor(getRandomInRange(0, 5));
+      initial_cell[i].ball.tint = colors[color];
+      initial_cell[i].ball.position.set(initial_cell[i].i * cell_width, initial_cell[i].j * cell_width);
+      this.addChild(initial_cell[i].ball);
+    }
+  }
 }
