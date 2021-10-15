@@ -1,4 +1,3 @@
-import { BoardConfig } from '../config';
 import { Graphics } from 'pixi.js';
 
 export class Ball extends Graphics {
