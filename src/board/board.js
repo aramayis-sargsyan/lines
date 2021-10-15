@@ -1,7 +1,10 @@
+import { sampleSize } from 'lodash';
 import { Container } from 'pixi.js';
 import { BoardConfig } from '../config';
+import { colors } from '../constants';
+import { getRandomInRange } from '../utils';
+import { Ball } from './ball';
 import { Cell } from './cell';
-
 export class Board extends Container {
   constructor() {
     super();

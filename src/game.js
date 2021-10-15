@@ -1,7 +1,7 @@
 import { Application } from 'pixi.js';
 import { Board } from './board/board';
-import { Queue } from './queue';
 import { BoardConfig } from './config';
+import { Queue } from './queue';
 
 export class Game extends Application {
   constructor() {
@@ -37,11 +37,11 @@ export class Game extends Application {
   }
 
   _buildQueue() {
-    // this._queue = new Queue();
-    // this._queue.buildQueueCell();
-    // this._queue.position.set(this.screen.width * 0.5, this.screen.height * 0.05);
-    // this._queue.pivot.set(this._queue.width * 0.5, this._queue.height * 0.5);
-    // this.stage.addChild(this._queue);
+    this._queue = new Queue();
+    this._queue.buildQueueCell();
+    this._queue.position.set(this.screen.width * 0.5, this.screen.height * 0.05);
+    this._queue.pivot.set(this._queue.width * 0.5, this._queue.height * 0.5);
+    this.stage.addChild(this._queue);
   }
 
   _update() {}
