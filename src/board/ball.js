@@ -1,4 +1,7 @@
+import { BoardConfig } from '../config';
 import { Graphics } from 'pixi.js';
+
+
 export class Ball extends Graphics {
   constructor() {
     super();
@@ -7,9 +10,11 @@ export class Ball extends Graphics {
 
 
   buildBall() {
-    this.lineStyle(5, 0x222222);
-    this.beginFill(0x333333);
+    this.beginFill(0xffffff);
     this.drawCircle(0, 0, 20);
     this.endFill();
   }
+
+
+
 }

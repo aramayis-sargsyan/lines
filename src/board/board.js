@@ -3,6 +3,8 @@ import { Ball } from './ball'
 import { BoardConfig } from '../config';
 import { Container } from 'pixi.js';
 import { sampleSize } from 'lodash';
+import { getRandomInRange } from '../utils'
+import { colors } from '../constants';
 
 export class Board extends Container {
   constructor() {
@@ -46,8 +48,11 @@ export class Board extends Container {
       console.log(i)
       const ball = new Ball();
       ball.buildBall();
+      let colorNumber = Math.floor(getRandomInRange(0, 5))
 
-      ball.position.set(i * 51, j * 51);
+      ball.tint = colors[colorNumber]
+      ball.position.set(i * 51 + 25, j * 51 + 25);
+
       this.addChild(ball);
 
 
