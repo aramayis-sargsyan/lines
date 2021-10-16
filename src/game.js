@@ -47,12 +47,17 @@ export class Game extends Application {
   }
 
   _setCellsListeners() {
-    console.log(this._board);
-    this._board.cells[0]
-      .on('pointerdown', this._onClickStart, this)
-      .on('pointerup', this._onClickEnd, this)
-      .on('pointerupoutside', this._onClickOutside, this);
+    console.log(this._board.cells);
+    for (let i = 0; i < this._board.cells.length; i++) {
+      this._board.cells[i].interactive = true;
+      this._board.cells[i].on('pointerdown', this._onClickStart, this);
+    }
+    // .on('pointerup', this._onClickEnd, this)
+    // .on('pointerupoutside', this._onClickOutside, this);
   }
 
+  _onClickStart() {
+    console.log('hello');
+  }
   _update() {}
 }

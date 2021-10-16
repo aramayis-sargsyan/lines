@@ -5,6 +5,7 @@ import { colors } from '../constants';
 import { getRandomInRange } from '../utils';
 import { Ball } from './ball';
 import { Cell } from './cell';
+
 export class Board extends Container {
   constructor() {
     super();
@@ -48,8 +49,14 @@ export class Board extends Container {
       let color = Math.floor(getRandomInRange(0, 5));
       initial_cell[i].ball.tint = colors[color];
       initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
-      this.matrixCells[initial_cell[i].i][initial_cell[i].j] = 1;
+
       this.addChild(initial_cell[i].ball);
+      this.matrixCells[initial_cell[i].j][initial_cell[i].i] = 1;
+      if (this.matrixCells[initial_cell[i].j][initial_cell[i].i] === 1) {
+        console.log(777);
+      }
+
+      console.log(this.matrixCells);
     }
   }
 }
