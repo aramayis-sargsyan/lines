@@ -23,6 +23,7 @@ export class Game extends Application {
   _onLoadComplete() {
     this._buildBoard();
     this._buildQueue();
+    this._setCellsListeners();
   }
 
   _buildBoard() {
@@ -32,16 +33,25 @@ export class Game extends Application {
     this._board.buildBalls(initial_balls_count);
     this._board.position.set(this.screen.width * 0.5 + (cell_width + cell_line_style) / 2, this.screen.height * 0.6);
     this._board.pivot.set(this._board.width * 0.5, this._board.height * 0.5);
-    console.log(this._board.width);
     this.stage.addChild(this._board);
   }
 
   _buildQueue() {
+    const { queue_balls_count, cell_width, cell_line_style } = BoardConfig;
     this._queue = new Queue();
     this._queue.buildQueueCell();
-    this._queue.position.set(this.screen.width * 0.5, this.screen.height * 0.05);
+    this._queue.buildBalls();
+    this._queue.position.set(this.screen.width * 0.5 + (cell_width + cell_line_style) / 2, this.screen.height * 0.05);
     this._queue.pivot.set(this._queue.width * 0.5, this._queue.height * 0.5);
     this.stage.addChild(this._queue);
+  }
+
+  _setCellsListeners() {
+    console.log(this._board);
+    this._board.cells[0]
+      .on('pointerdown', this._onClickStart, this)
+      .on('pointerup', this._onClickEnd, this)
+      .on('pointerupoutside', this._onClickOutside, this);
   }
 
   _update() {}
