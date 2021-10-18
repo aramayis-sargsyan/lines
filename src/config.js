@@ -7,4 +7,5 @@ export const BoardConfig = {
   queue_balls_count: 3,
   initial_balls_count: 5,
   match_balls_count: 5,
+  circle_width: 30,
 };

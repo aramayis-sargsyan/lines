@@ -22,8 +22,8 @@ export class Board extends Container {
         arr.push(0);
         const cell = new Cell();
         cell.ball = null;
-        cell.i = i;
-        cell.j = j;
+        cell.i = j;
+        cell.j = i;
         cell.buildCell(0);
         cell.position.set(i * (cell_width + 1), j * (cell_width + 1));
         cell.tint = (i + j) % 2 === 0 ? 0x888888 : 0xbbbbbb;
@@ -52,11 +52,6 @@ export class Board extends Container {
 
       this.addChild(initial_cell[i].ball);
       this.matrixCells[initial_cell[i].j][initial_cell[i].i] = 1;
-      if (this.matrixCells[initial_cell[i].j][initial_cell[i].i] === 1) {
-        console.log(777);
-      }
-
-      console.log(this.matrixCells);
     }
   }
 }
