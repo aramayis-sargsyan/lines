@@ -1,13 +1,12 @@
 import { Graphics } from 'pixi.js';
 import { BoardConfig } from '../config';
+import { Ball } from './ball';
+import { Board } from './board';
 import { Circle } from './circle';
 
 export class Cell extends Graphics {
   constructor() {
     super();
-
-    this.interactive = true;
-    this.on('pointerdown', this._onClick, this);
   }
 
   buildCell(lineStyle) {
@@ -19,12 +18,5 @@ export class Cell extends Graphics {
 
     this.pivot.x = this.width / 2;
     this.pivot.y = this.height / 2;
-  }
-
-  _onClick() {
-    const circle = new Circle();
-
-    this.addChild(circle);
-    console.warn('aaaaa');
   }
 }
