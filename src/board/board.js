@@ -23,15 +23,17 @@ export class Board extends Container {
       let arr = [];
       for (let j = 0; j < cell_count; j++) {
         arr.push(0);
-        const cell = new Cell();
+        const cell = new Cell(i, j);
+        cell.emiter.on('onClick', (cell) => {
+          this.buildCircle(cell);
+        });
         cell.ball = null;
         cell.i = j;
         cell.j = i;
         cell.buildCell(0);
         cell.position.set(j * (cell_width + 1), i * (cell_width + 1));
         cell.tint = (i + j) % 2 === 0 ? 0x888888 : 0xbbbbbb;
-        cell.interactive = true;
-        cell.on('pointerdown', this._onClick, this);
+
         this.cells.push(cell);
         this.addChild(cell);
       }
@@ -61,19 +63,25 @@ export class Board extends Container {
     }
   }
 
-  _onClick(e) {
-    console.log(e);
-    console.log(this);
-    // if (this.cell.ball !== null) {
-    //   this.cell.ball.ballActive = true;
-    //   this.cell.ball.buildCircle();
-    // }
-  }
-
-  buildCircle() {
-    if (this._circle) {
+  buildCircle(cell) {
+    if (this._circle !== null) {
       this._circle.destroy();
     }
-    const circle = new Circle();
+    if (cell.ball === null) {
+      this._circle = null;
+      for (let i = 0; i < this.balls.length; i++) {
+        if (this.balls[i].ballActive === true) {
+          this._phathfinder();
+        }
+        console.log(this.balls[i].ballActive);
+      }
+    } else {
+      this._circle = new Circle();
+      cell.ball.ballActive = true;
+      cell.ball.addChild(this._circle);
+    }
+  }
+  _phathfinder() {
+    //
   }
 }
