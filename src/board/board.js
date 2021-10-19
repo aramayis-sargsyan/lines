@@ -70,11 +70,11 @@ export class Board extends Container {
     if (cell.ball === null) {
       this._circle = null;
       for (let i = 0; i < this.balls.length; i++) {
-        if (this.balls[i].ballActive === true) {
-          this._phathfinder();
-        }
-        console.log(this.balls[i].ballActive);
+        // if (this.balls[i].ballActive) {
+        this._phathfinder();
+        // }
       }
+      // console.log(this.balls[i].ballActive);
     } else {
       this._circle = new Circle();
       cell.ball.ballActive = true;
@@ -82,6 +82,14 @@ export class Board extends Container {
     }
   }
   _phathfinder() {
-    //
+    for (let i = 0; i < this.cells.length; i++) {
+      if (this.balls[i].ballActive) {
+        this.balls[i].destroy();
+      } else {
+        // const ball = new Ball();
+        // ball.buildBall();
+        console.log('hello');
+      }
+    }
   }
 }
