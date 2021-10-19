@@ -88,7 +88,7 @@ export class Board extends Container {
     console.log(this.matrixCells);
     const grid = new PF.Grid(this.matrixCells);
     const finder = new PF.AStarFinder();
-    const path = finder.findPath(0, 1, 3, 3, grid);
+    const path = finder.findPath(1, 1, 3, 3, grid);
 
     console.warn(path);
   }
