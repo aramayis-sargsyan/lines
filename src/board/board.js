@@ -33,7 +33,6 @@ export class Board extends Container {
         cell.buildCell(0);
         cell.position.set(j * (cell_width + 1), i * (cell_width + 1));
         cell.tint = (i + j) % 2 === 0 ? 0x888888 : 0xbbbbbb;
-
         this.cells.push(cell);
         this.addChild(cell);
       }
@@ -63,7 +62,8 @@ export class Board extends Container {
       // initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
       this.balls.push(initial_cell[i].ball);
       const cell = new Cell();
-      cell.setBall(this.ball);
+      initial_cell[i].addChild(this.ball);
+      cell.setBall(initial_cell[i], this.ball);
       this.matrixCells[initial_cell[i].j][initial_cell[i].i] = 1;
     }
   }
@@ -101,15 +101,15 @@ export class Board extends Container {
 
   _moveBall(paths) {
     const { cell_count } = BoardConfig;
-    // console.warn(paths);
+    console.log(this.matrixCells);
+    this.matrixCells[paths[0][1]][paths[0][0]] = 0;
+    this.matrixCells[paths[paths.length - 1][1]][paths[paths.length - 1][0]] = 1;
+
     let indexStart = paths[0][1] * cell_count + paths[0][0];
     let indexEnd = paths[paths.length - 1][1] * cell_count + paths[paths.length - 1][0];
+
     this.cells[indexEnd].ball = this.cells[indexStart].ball;
-    console.warn(this.cells[indexStart].ball);
-    this.cells[indexEnd].addChild(this.cells[indexEnd].ball);
-    // console.log(this.cells[indexEnd]);
-    // const geme = new Game();
-    // geme._updateBallCell(this.cells[indexEnd]);
-    // this.cells[indexStart].ball.destroy();
+    this.cells[indexEnd].addChild(this.cells[indexStart].ball);
+    this.cells[indexStart].ball = null;
   }
 }

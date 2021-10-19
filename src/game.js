@@ -21,7 +21,6 @@ export class Game extends Application {
 
   _onLoadComplete() {
     this._buildBoard();
-
     this._buildQueue();
   }
 
@@ -46,7 +45,6 @@ export class Game extends Application {
   }
   _updateBallCell(cell) {
     this._board.addChild(cell);
-    // console.log(cell);
     this.stage.addChild(this._board);
   }
 

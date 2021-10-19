@@ -23,7 +23,12 @@ export class Cell extends Graphics {
     this.pivot.y = this.height / 2;
   }
 
-  setBall(ball) {}
+  setBall(cell, ball) {
+    const { cell_width } = BoardConfig;
+
+    ball.position.set(cell_width / 2, cell_width / 2);
+    cell.addChild(ball);
+  }
 
   _onClick() {
     this.emiter.emit('onClick', this);

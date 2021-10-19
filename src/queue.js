@@ -33,8 +33,9 @@ export class Queue extends Container {
       let color = Math.floor(getRandomInRange(0, 5));
       this.queueCells[i].ball = ball;
       this.queueCells[i].ball.tint = colors[color];
-      //this.queueCells[i].ball.position.set(this.queueCells[i].i * (cell_width + 1), cell_width);
-      this.queueCells[i].addChild(this.queueCells[i].ball);
+      const cell = new Cell();
+      this.queueCells[i].addChild(ball);
+      cell.setBall(this.queueCells[i], ball);
     }
   }
 }
