@@ -1,4 +1,5 @@
 import { sampleSize } from 'lodash';
+import PF from 'pathfinding';
 import { Container } from 'pixi.js';
 import { BoardConfig } from '../config';
 import { colors } from '../constants';
@@ -6,7 +7,6 @@ import { getRandomInRange } from '../utils';
 import { Ball } from './ball';
 import { Cell } from './cell';
 import { Circle } from './circle';
-import PF from 'pathfinding';
 
 export class Board extends Container {
   constructor() {
@@ -50,16 +50,20 @@ export class Board extends Container {
     const initial_cell = sampleSize(emtyCells, ballCount);
     for (let i = 0; i < ballCount; i++) {
       this.ball = new Ball();
+      // console.log(this.ball);
       this.ball.buildBall();
       this.ball.IsActive = false;
       this.ball.circle = null;
+      this.ball.i = null;
+      this.ball.j = null;
+
       initial_cell[i].ball = this.ball;
       let color = Math.floor(getRandomInRange(0, 5));
       initial_cell[i].ball.tint = colors[color];
-      initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
+      // initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
       this.balls.push(initial_cell[i].ball);
-
-      this.addChild(initial_cell[i].ball);
+      const cell = new Cell();
+      cell.setBall(this.ball);
       this.matrixCells[initial_cell[i].j][initial_cell[i].i] = 1;
     }
   }
@@ -75,21 +79,37 @@ export class Board extends Container {
       this.circleBall = cell.ball;
       const circle = new Circle();
       this.circleBall.circle = circle;
+      this.circleBall.i = cell.i;
+      this.circleBall.j = cell.j;
+
       this.circleBall.IsActive = true;
       this.circleBall.addChild(circle);
     } else {
       if (this.circleBall) {
-        this._phathfinder();
+        this._phathfinder(this.circleBall.i, this.circleBall.j, cell.i, cell.j);
       }
       this.circleBall = null;
     }
   }
-  _phathfinder() {
-    console.log(this.matrixCells);
+
+  _phathfinder(xStart, yStart, xEnd, yEnd) {
     const grid = new PF.Grid(this.matrixCells);
     const finder = new PF.AStarFinder();
-    const path = finder.findPath(1, 1, 3, 3, grid);
+    const path = finder.findPath(xStart, yStart, xEnd, yEnd, grid);
+    this._moveBall(path);
+  }
 
-    console.warn(path);
+  _moveBall(paths) {
+    const { cell_count } = BoardConfig;
+    // console.warn(paths);
+    let indexStart = paths[0][1] * cell_count + paths[0][0];
+    let indexEnd = paths[paths.length - 1][1] * cell_count + paths[paths.length - 1][0];
+    this.cells[indexEnd].ball = this.cells[indexStart].ball;
+    console.warn(this.cells[indexStart].ball);
+    this.cells[indexEnd].addChild(this.cells[indexEnd].ball);
+    // console.log(this.cells[indexEnd]);
+    // const geme = new Game();
+    // geme._updateBallCell(this.cells[indexEnd]);
+    // this.cells[indexStart].ball.destroy();
   }
 }

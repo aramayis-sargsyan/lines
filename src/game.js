@@ -20,28 +20,9 @@ export class Game extends Application {
   }
 
   _onLoadComplete() {
-    // const cell = new Graphics();
-    // cell.lineStyle(1, 0x000000);
-    // cell.beginFill(0xffffff);
-    // cell.drawRoundedRect(0, 0, 50, 50, 10);
-    // cell.endFill();
-    // cell.position.set(200, 200);
-    // cell.pivot.set(cell.width / 2, cell.height / 2);
-
-    // const ball = new Graphics();
-    // ball.lineStyle(1, 0x000000);
-    // ball.beginFill(0x000000);
-    // ball.drawCircle(0, 0, 20);
-    // ball.endFill();
-    // ball.position.set(cell.x, cell.y);
-
-    // this.stage.addChild(cell);
-    // this.stage.addChild(ball);
-
-    // return;
     this._buildBoard();
+
     this._buildQueue();
-    this._setCellsListeners();
   }
 
   _buildBoard() {
@@ -63,18 +44,11 @@ export class Game extends Application {
     this._queue.pivot.set(this._queue.width * 0.5, this._queue.height * 0.5);
     this.stage.addChild(this._queue);
   }
-
-  _setCellsListeners() {
-    // for (let i = 0; i < this._board.cells.length; i++) {
-    //   // this._board.cells[i].on('pointerdown', this._onClickStart, this);
-    // }
-    // .on('pointerup', this._onClickEnd, this)
-    // .on('pointerupoutside', this._onClickOutside, this);
+  _updateBallCell(cell) {
+    this._board.addChild(cell);
+    // console.log(cell);
+    this.stage.addChild(this._board);
   }
 
-  _onClickStart(event) {
-    console.log(event);
-    console.log('hello');
-  }
   _update() {}
 }

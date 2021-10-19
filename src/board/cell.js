@@ -1,9 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 import { Graphics } from 'pixi.js';
 import { BoardConfig } from '../config';
-import { Ball } from './ball';
-import { Board } from './board';
-import { Circle } from './circle';
 
 export class Cell extends Graphics {
   constructor(row, column) {
@@ -25,6 +22,8 @@ export class Cell extends Graphics {
     this.pivot.x = this.width / 2;
     this.pivot.y = this.height / 2;
   }
+
+  setBall(ball) {}
 
   _onClick() {
     this.emiter.emit('onClick', this);

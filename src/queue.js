@@ -1,7 +1,7 @@
 import { Container } from 'pixi.js';
+import { Ball } from './board/ball';
 import { Cell } from './board/cell';
 import { BoardConfig } from './config';
-import { Ball } from './board/ball';
 import { colors } from './constants';
 import { getRandomInRange } from './utils';
 
@@ -33,8 +33,8 @@ export class Queue extends Container {
       let color = Math.floor(getRandomInRange(0, 5));
       this.queueCells[i].ball = ball;
       this.queueCells[i].ball.tint = colors[color];
-      this.queueCells[i].ball.position.set(this.queueCells[i].i * (cell_width + 1), cell_width);
-      this.addChild(this.queueCells[i].ball);
+      //this.queueCells[i].ball.position.set(this.queueCells[i].i * (cell_width + 1), cell_width);
+      this.queueCells[i].addChild(this.queueCells[i].ball);
     }
   }
 }
