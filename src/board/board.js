@@ -40,26 +40,26 @@ export class Board extends Container {
     }
   }
 
-  buildBalls(ballCount) {
+  buildBalls(ballCount, collors) {
     const { cell_width } = BoardConfig;
-
+    console.log(this.cells);
     const emtyCells = this.cells.filter((cell) => {
       return cell.ball === null;
     });
+    console.warn(emtyCells);
     const initial_cell = sampleSize(emtyCells, ballCount);
     for (let i = 0; i < ballCount; i++) {
       this.ball = new Ball();
-      // console.log(this.ball);
       this.ball.buildBall();
       this.ball.IsActive = false;
       this.ball.circle = null;
       this.ball.i = null;
       this.ball.j = null;
 
+      // console.log(initial_cell);
       initial_cell[i].ball = this.ball;
       let color = Math.floor(getRandomInRange(0, 5));
       initial_cell[i].ball.tint = colors[color];
-      // initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
       this.balls.push(initial_cell[i].ball);
       const cell = new Cell();
       initial_cell[i].addChild(this.ball);

@@ -38,7 +38,7 @@ export class Game extends Application {
     const { queue_balls_count, cell_width, cell_line_style } = BoardConfig;
     this._queue = new Queue();
     this._queue.buildQueueCell();
-    this._queue.buildBalls();
+    this._queue.buildQueueBalls();
     this._queue.position.set(this.screen.width * 0.5 + (cell_width + cell_line_style) / 2, this.screen.height * 0.05);
     this._queue.pivot.set(this._queue.width * 0.5, this._queue.height * 0.5);
     this.stage.addChild(this._queue);
