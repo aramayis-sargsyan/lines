@@ -6,6 +6,7 @@ import { getRandomInRange } from '../utils';
 import { Ball } from './ball';
 import { Cell } from './cell';
 import { Circle } from './circle';
+import PF from 'pathfinding';
 
 export class Board extends Container {
   constructor() {
@@ -13,9 +14,8 @@ export class Board extends Container {
     this.cells = [];
     this.balls = [];
     this.matrixCells = [];
-    this._circle = null;
+    this.circleBall = null;
   }
-
   buildBoard() {
     const { cell_count, cell_width } = BoardConfig;
 
@@ -49,10 +49,11 @@ export class Board extends Container {
     });
     const initial_cell = sampleSize(emtyCells, ballCount);
     for (let i = 0; i < ballCount; i++) {
-      const ball = new Ball();
-      ball.buildBall();
-      ball.ballActive = false;
-      initial_cell[i].ball = ball;
+      this.ball = new Ball();
+      this.ball.buildBall();
+      this.ball.IsActive = false;
+      this.ball.circle = null;
+      initial_cell[i].ball = this.ball;
       let color = Math.floor(getRandomInRange(0, 5));
       initial_cell[i].ball.tint = colors[color];
       initial_cell[i].ball.position.set(initial_cell[i].i * (cell_width + 1), initial_cell[i].j * (cell_width + 1));
@@ -64,32 +65,31 @@ export class Board extends Container {
   }
 
   buildCircle(cell) {
-    if (this._circle !== null) {
-      this._circle.destroy();
+    if (this.circleBall) {
+      this.circleBall.circle.destroy();
+      this.circleBall.circle = null;
+      this.circleBall.IsActive = false;
     }
-    if (cell.ball === null) {
-      this._circle = null;
-      for (let i = 0; i < this.balls.length; i++) {
-        // if (this.balls[i].ballActive) {
-        this._phathfinder();
-        // }
-      }
-      // console.log(this.balls[i].ballActive);
+
+    if (cell.ball !== null) {
+      this.circleBall = cell.ball;
+      const circle = new Circle();
+      this.circleBall.circle = circle;
+      this.circleBall.IsActive = true;
+      this.circleBall.addChild(circle);
     } else {
-      this._circle = new Circle();
-      cell.ball.ballActive = true;
-      cell.ball.addChild(this._circle);
+      if (this.circleBall) {
+        this._phathfinder();
+      }
+      this.circleBall = null;
     }
   }
   _phathfinder() {
-    for (let i = 0; i < this.cells.length; i++) {
-      if (this.balls[i].ballActive) {
-        this.balls[i].destroy();
-      } else {
-        // const ball = new Ball();
-        // ball.buildBall();
-        console.log('hello');
-      }
-    }
+    console.log(this.matrixCells);
+    const grid = new PF.Grid(this.matrixCells);
+    const finder = new PF.AStarFinder();
+    const path = finder.findPath(0, 1, 3, 3, grid);
+
+    console.warn(path);
   }
 }

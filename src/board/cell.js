@@ -28,8 +28,5 @@ export class Cell extends Graphics {
 
   _onClick() {
     this.emiter.emit('onClick', this);
-    // console.log(emiter);
-    // console.warn(this.row, this.column);
-    // event emit 'onCellClick'
   }
 }
