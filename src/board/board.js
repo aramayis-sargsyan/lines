@@ -42,11 +42,11 @@ export class Board extends Container {
 
   buildBalls(ballCount, collors) {
     const { cell_width } = BoardConfig;
-    console.log(this.cells);
+    // console.log(this.cells);
     const emtyCells = this.cells.filter((cell) => {
       return cell.ball === null;
     });
-    console.warn(emtyCells);
+    //console.warn(emtyCells);
     const initial_cell = sampleSize(emtyCells, ballCount);
     for (let i = 0; i < ballCount; i++) {
       this.ball = new Ball();
@@ -56,7 +56,6 @@ export class Board extends Container {
       this.ball.i = null;
       this.ball.j = null;
 
-      // console.log(initial_cell);
       initial_cell[i].ball = this.ball;
       let color = Math.floor(getRandomInRange(0, 5));
       initial_cell[i].ball.tint = colors[color];
@@ -111,5 +110,6 @@ export class Board extends Container {
     this.cells[indexEnd].ball = this.cells[indexStart].ball;
     this.cells[indexEnd].addChild(this.cells[indexStart].ball);
     this.cells[indexStart].ball = null;
+    this.buildBalls(3);
   }
 }
